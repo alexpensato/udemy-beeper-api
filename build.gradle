@@ -1,0 +1,73 @@
+group 'net.pensato.udemy.beeper'
+version '1.0.0'
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+        kotlinVersion = '1.1.51'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3")
+        classpath ("org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'nebula.provided-base'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+springBoot {
+    mainClass = 'net.pensato.udemy.beeper.AppKt'
+}
+
+junitPlatform {
+    platformVersion = '1.0.0-M2'
+
+    engines {
+        include 'spek'
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    maven { url "https://repo.eclipse.org/content/repositories/paho-snapshots/" }
+    maven { url "https://raw.github.com/eburtsev/gdata-maven/master/" }
+}
+
+dependencies {
+    // Kotlin language
+    compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+
+    // Spring Boot
+    compile("org.springframework.boot:spring-boot-starter-web")
+    provided("org.springframework.boot:spring-boot-starter-tomcat")
+
+    // JPA 2.2 and updated Hibernate for correct Java 8 Date and Time support
+    compile("javax.persistence:javax.persistence-api:2.2")
+    compile("org.hibernate:hibernate-core:5.2.12.Final")
+    compile("org.hibernate:hibernate-entitymanager:5.2.10.Final")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9")
+
+    // Database
+    compile group: 'postgresql', name: 'postgresql-jdbc42', version: '9.4.1208-atlassian-hosted'
+
+    // Test
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testCompile 'org.amshove.kluent:kluent:1.11'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+}
