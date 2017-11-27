@@ -1,0 +1,70 @@
+= Beeper API for the VueJS 2 Udemy Course
+
+== Spring Boot JWT example in Kotlin
+
+The purpose of this project is to serve as a backend API to anyone studying the Udemy course https://www.udemy.com/learn-by-doing-vue-js-2-the-right-way/[VueJs 2.0 The Right Way].
+
+The course provides a php api, but as I prefer to fully understand what I am doing, I converted it to a JVM/Kotlin project.
+
+It also can be used as an example of a Spring Boot JWT Authentication project in Kotlin.
+
+It uses https://projects.spring.io/spring-data-jpa/[Spring Data JPA] and JPA 2.2 for correct usage of Java 8 Date and Time API.
+
+It consists of a working project that can run as an independent JAR and also as a deployable WAR.
+
+It uses Postgres at the moment, but can be easily changed to use H2 in-memory database for ease of deployment.
+
+== Requirements
+* JDK 1.8+
+* PostgreSQL 9.5+
+* Gradle 4.2.x
+* An IDE that supports Kotlin language (preferably IntelliJ IDEA)
+
+== Database preparation
+
+Before running the project, it is necessary to create its user and database in the PostgreSQL server.
+
+The project has a few settings configured in application.properties file, but you can modify them as you wish.
+
+Below are DDL commands using PostgreSQL syntax:
+
+[source, sql]
+----
+CREATE USER pensato WITH
+	LOGIN
+	SUPERUSER
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'pensato';
+----
+
+[source, sql]
+----
+CREATE DATABASE udemy-beeper-db
+    WITH
+    OWNER = pensato
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+----
+
+== Disclaimer
+
+This project is neither an API modeling example, nor it is as a DDD (Domain Driven Design) example.
+
+Use it only as a backend API project for studying purposes.
+
+
+== Contributions
+
+…are always welcome.
+
+Don’t hesitate to submit a https://github.com/alexpensato/udemy-beeper-api/issues[bug report] or a
+https://github.com/alexpensato/udemy-beeper-api/pulls[pull requests].
+
+When filling a bug report or submitting a new feature, please try including supporting test cases.
+
+
+== License
+
+This project is licensed under http://www.apache.org/licenses/LICENSE-2.0.html[Apache License 2.0].
