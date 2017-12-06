@@ -22,7 +22,7 @@ import javax.persistence.Id
 import javax.validation.constraints.NotNull
 
 @Entity
-data class Person(
+data class AppUser (
         @Id
         @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
         var id: Long = 0,

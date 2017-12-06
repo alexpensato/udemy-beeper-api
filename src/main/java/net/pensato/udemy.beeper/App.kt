@@ -15,9 +15,9 @@
  */
 package net.pensato.udemy.beeper
 
-import net.pensato.udemy.beeper.domain.Person
+import net.pensato.udemy.beeper.domain.AppUser
 import net.pensato.udemy.beeper.domain.Beep
-import net.pensato.udemy.beeper.repository.PersonRepository
+import net.pensato.udemy.beeper.repository.AppUserRepository
 import net.pensato.udemy.beeper.repository.BeepRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -26,6 +26,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+
+
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = arrayOf("net.pensato.udemy.beeper.repository"))
@@ -36,22 +39,27 @@ open class App : SpringBootServletInitializer() {
 	}
 
 	@Bean
+	fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
+		return BCryptPasswordEncoder()
+	}
+
+	@Bean
 	open fun init(
-			personRepository: PersonRepository,
+			personRepository: AppUserRepository,
 			beepRepository: BeepRepository) = CommandLineRunner {
 
 		val result = personRepository.findAll()
 		if (result == null || result.toList().isEmpty()) {
 
-			val john = personRepository.save(Person(username = "John", email = "john@example.com"))
-			beepRepository.save(Beep(text = "My first beep", person = john))
-			beepRepository.save(Beep(text = "Another beep", person = john))
-			beepRepository.save(Beep(text = "Last beep", person = john))
+			val john = personRepository.save(AppUser(username = "John", email = "john@example.com"))
+			beepRepository.save(Beep(text = "My first beep", appUser = john))
+			beepRepository.save(Beep(text = "Another beep", appUser = john))
+			beepRepository.save(Beep(text = "Last beep", appUser = john))
 
-			val mary = personRepository.save(Person(username = "Mary", email = "mary@example.com"))
-			beepRepository.save(Beep(text = "Hello everyone", person = mary))
-			beepRepository.save(Beep(text = "How are you doing?", person = mary))
-			beepRepository.save(Beep(text = "Good bye everyone", person = mary))
+			val mary = personRepository.save(AppUser(username = "Mary", email = "mary@example.com"))
+			beepRepository.save(Beep(text = "Hello everyone", appUser = mary))
+			beepRepository.save(Beep(text = "How are you doing?", appUser = mary))
+			beepRepository.save(Beep(text = "Good bye everyone", appUser = mary))
 		}
 	}
 }

@@ -15,12 +15,12 @@
  */
 package net.pensato.udemy.beeper.repository
 
-import net.pensato.udemy.beeper.domain.Person
+import net.pensato.udemy.beeper.domain.AppUser
 import net.pensato.udemy.beeper.domain.Beep
 import org.springframework.data.repository.PagingAndSortingRepository
 
 interface BeepRepository : PagingAndSortingRepository<Beep, Long> {
 
-    fun findAllByPerson(person: Person): List<Beep>
+    fun findAllByAppUser(appUser: AppUser): List<Beep>
 
 }
