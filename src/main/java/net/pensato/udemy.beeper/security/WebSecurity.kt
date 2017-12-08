@@ -30,12 +30,12 @@ open class WebSecurity(val userDetailsService: UserDetailsService, val bCryptPas
     }
 
     @Throws(Exception::class)
-    public override fun configure(auth: AuthenticationManagerBuilder?) {
+    override fun configure(auth: AuthenticationManagerBuilder?) {
         auth!!.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
     }
 
     @Bean
-    internal fun corsConfigurationSource(): CorsConfigurationSource {
+    open fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
         return source

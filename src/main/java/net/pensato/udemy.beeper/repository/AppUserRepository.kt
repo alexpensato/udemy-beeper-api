@@ -20,6 +20,6 @@ import org.springframework.data.repository.PagingAndSortingRepository
 
 interface AppUserRepository : PagingAndSortingRepository<AppUser, Long> {
 
-    fun findByUsername(username: String): AppUser
+    fun findByUsername(username: String): AppUser?
 
 }

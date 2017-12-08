@@ -39,7 +39,7 @@ open class App : SpringBootServletInitializer() {
 	}
 
 	@Bean
-	fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
+	open fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
 		return BCryptPasswordEncoder()
 	}
 

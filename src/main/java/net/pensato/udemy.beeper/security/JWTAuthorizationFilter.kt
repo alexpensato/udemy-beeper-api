@@ -3,6 +3,7 @@ package net.pensato.udemy.beeper.security
 import java.util.ArrayList
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import io.jsonwebtoken.Jwts
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import javax.servlet.ServletException
 import java.io.IOException
@@ -14,7 +15,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import javax.servlet.http.HttpServletRequest
 
 
-open class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticationFilter(authManager) {
+open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: AuthenticationManager) : BasicAuthenticationFilter(authenticationManager) {
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(req: HttpServletRequest,
@@ -33,7 +34,7 @@ open class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAut
         chain.doFilter(req, res)
     }
 
-    private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
+    open fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token = request.getHeader(SecurityConstants.HEADER_STRING)
         if (token != null) {
             // parse the token.
