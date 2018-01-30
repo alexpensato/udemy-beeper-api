@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import net.pensato.udemy.beeper.domain.AppUser
+import net.pensato.udemy.beeper.domain.Usuario
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.core.Authentication
@@ -20,14 +20,15 @@ import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 
-open class JWTAuthenticationFilter @Autowired constructor(val authentication: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
+open class JWTAuthenticationFilter @Autowired constructor(
+        val authentication: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
 
     @Throws(AuthenticationException::class)
-    override fun attemptAuthentication(req: HttpServletRequest,
-                              res: HttpServletResponse): Authentication {
+    override fun attemptAuthentication(
+            req: HttpServletRequest, res: HttpServletResponse): Authentication {
         try {
             val creds = ObjectMapper()
-                    .readValue(req.getInputStream(), AppUser::class.java)
+                    .readValue(req.getInputStream(), Usuario::class.java)
 
             return authentication.authenticate(
                     UsernamePasswordAuthenticationToken(

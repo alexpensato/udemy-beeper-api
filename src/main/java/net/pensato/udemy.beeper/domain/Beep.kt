@@ -30,5 +30,5 @@ data class Beep(
         var likes: Long = 0,
         var creation: LocalDateTime = LocalDateTime.now(),
         @ManyToOne(optional = false)
-        var appUser: AppUser = AppUser()
+        var usuario: Usuario = Usuario()
 )

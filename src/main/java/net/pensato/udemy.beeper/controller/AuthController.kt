@@ -15,8 +15,8 @@
  */
 package net.pensato.udemy.beeper.controller
 
-import net.pensato.udemy.beeper.domain.AppUser
-import net.pensato.udemy.beeper.repository.AppUserRepository
+import net.pensato.udemy.beeper.domain.Usuario
+import net.pensato.udemy.beeper.repository.UsuarioRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -24,13 +24,34 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.PostMapping
 
 @RestController
-@RequestMapping("/users")
-class AppUserController @Autowired constructor(val appUserRepository: AppUserRepository, val bCryptPasswordEncoder: BCryptPasswordEncoder) {
+@RequestMapping("/auth")
+class AuthController @Autowired constructor(
+        val usuarioRepository: UsuarioRepository,
+        val bCryptPasswordEncoder: BCryptPasswordEncoder) {
 
+    /**
+     * <p>
+     *     Returns JWT token
+     *     Endpoint: POST /auth
+     *     RequestBody parameters: username, password
+     * </p>
+     */
+    @PostMapping()
+    fun authResource(@RequestBody username: String, @RequestBody password: String): String {
+        return "ACCESS GRANTED"
+    }
+
+    /**
+     * <p>
+     *     Sign-up a new user
+     *     Endpoint: POST /auth/sign-up
+     *     RequestBody parameters: usuario
+     * </p>
+     */
     @PostMapping("/sign-up")
-    fun signUp(@RequestBody appUser: AppUser) {
-        appUser.password = bCryptPasswordEncoder.encode(appUser.password)
-        appUserRepository.save(appUser)
+    fun signUp(@RequestBody usuario: Usuario) {
+        usuario.password = bCryptPasswordEncoder.encode(usuario.password)
+        usuarioRepository.save(usuario)
     }
 
 }

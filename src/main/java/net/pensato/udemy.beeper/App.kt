@@ -15,9 +15,9 @@
  */
 package net.pensato.udemy.beeper
 
-import net.pensato.udemy.beeper.domain.AppUser
+import net.pensato.udemy.beeper.domain.Usuario
 import net.pensato.udemy.beeper.domain.Beep
-import net.pensato.udemy.beeper.repository.AppUserRepository
+import net.pensato.udemy.beeper.repository.UsuarioRepository
 import net.pensato.udemy.beeper.repository.BeepRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
@@ -45,21 +45,21 @@ open class App : SpringBootServletInitializer() {
 
 	@Bean
 	open fun init(
-			personRepository: AppUserRepository,
+			personRepository: UsuarioRepository,
 			beepRepository: BeepRepository) = CommandLineRunner {
 
 		val result = personRepository.findAll()
 		if (result == null || result.toList().isEmpty()) {
 
-			val john = personRepository.save(AppUser(username = "John", email = "john@example.com"))
-			beepRepository.save(Beep(text = "My first beep", appUser = john))
-			beepRepository.save(Beep(text = "Another beep", appUser = john))
-			beepRepository.save(Beep(text = "Last beep", appUser = john))
+			val john = personRepository.save(Usuario(username = "John", email = "john@example.com"))
+			beepRepository.save(Beep(text = "My first beep", usuario = john))
+			beepRepository.save(Beep(text = "Another beep", usuario = john))
+			beepRepository.save(Beep(text = "Last beep", usuario = john))
 
-			val mary = personRepository.save(AppUser(username = "Mary", email = "mary@example.com"))
-			beepRepository.save(Beep(text = "Hello everyone", appUser = mary))
-			beepRepository.save(Beep(text = "How are you doing?", appUser = mary))
-			beepRepository.save(Beep(text = "Good bye everyone", appUser = mary))
+			val mary = personRepository.save(Usuario(username = "Mary", email = "mary@example.com"))
+			beepRepository.save(Beep(text = "Hello everyone", usuario = mary))
+			beepRepository.save(Beep(text = "How are you doing?", usuario = mary))
+			beepRepository.save(Beep(text = "Good bye everyone", usuario = mary))
 		}
 	}
 }
