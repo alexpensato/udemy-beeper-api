@@ -23,7 +23,7 @@ open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: 
                                    chain: FilterChain) {
         val header = req.getHeader(SecurityConstants.HEADER_STRING)
 
-        if (header == null || !header!!.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             chain.doFilter(req, res)
             return
         }
@@ -40,7 +40,7 @@ open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: 
             // parse the token.
             val user = Jwts.parser()
                     .setSigningKey(SecurityConstants.SECRET.toByteArray())
-                    .parseClaimsJws(token!!.replace(SecurityConstants.TOKEN_PREFIX, ""))
+                    .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject()
 

@@ -36,20 +36,20 @@ class AuthController @Autowired constructor(
      *     RequestBody parameters: username, password
      * </p>
      */
-    @PostMapping()
+    @PostMapping("/login")
     fun authResource(@RequestBody username: String, @RequestBody password: String): String {
         return "ACCESS GRANTED"
     }
 
     /**
      * <p>
-     *     Sign-up a new user
-     *     Endpoint: POST /auth/sign-up
+     *     Registers a new user. It is similar to create new user, but this URI doesn't require previous authentication.
+     *     Endpoint: POST /auth/register
      *     RequestBody parameters: usuario
      * </p>
      */
-    @PostMapping("/sign-up")
-    fun signUp(@RequestBody usuario: Usuario) {
+    @PostMapping("/register")
+    fun register(@RequestBody usuario: Usuario) {
         usuario.password = bCryptPasswordEncoder.encode(usuario.password)
         usuarioRepository.save(usuario)
     }
