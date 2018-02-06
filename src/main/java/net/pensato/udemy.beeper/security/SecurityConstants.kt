@@ -6,4 +6,5 @@ object SecurityConstants {
     val TOKEN_PREFIX = "Bearer "
     val HEADER_STRING = "Authorization"
     val REGISTER_URL = "/auth/register"
+    val LOGIN_URL = "/auth/login"
 }

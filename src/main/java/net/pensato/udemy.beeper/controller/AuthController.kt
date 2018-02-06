@@ -37,7 +37,8 @@ class AuthController @Autowired constructor(
      * </p>
      */
     @PostMapping("/login")
-    fun authResource(@RequestBody username: String, @RequestBody password: String): String {
+    fun authResource(@RequestBody  usuario: Usuario): String {
+        // username: String, password: String
         return "ACCESS GRANTED"
     }
 
