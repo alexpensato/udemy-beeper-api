@@ -20,21 +20,26 @@ open class WebSecurity(
         val bCryptPasswordEncoder: BCryptPasswordEncoder) : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
+    override fun configure(auth: AuthenticationManagerBuilder?) {
+        auth!!.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
+    }
+
+    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_URL).permitAll()
 //                .antMatchers(HttpMethod.POST, SecurityConstants.LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
+//                .formLogin()
+//                    .loginProcessingUrl("/auth/login")
+//                    .passwordParameter("password")
+//                    .usernameParameter("username")
+//                .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    }
-
-    @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
     }
 
     @Bean

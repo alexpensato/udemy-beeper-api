@@ -31,19 +31,6 @@ class AuthController @Autowired constructor(
 
     /**
      * <p>
-     *     Returns JWT token
-     *     Endpoint: POST /auth
-     *     RequestBody parameters: username, password
-     * </p>
-     */
-    @PostMapping("/login")
-    fun authResource(@RequestBody  usuario: Usuario): String {
-        // username: String, password: String
-        return "ACCESS GRANTED"
-    }
-
-    /**
-     * <p>
      *     Registers a new user. It is similar to create new user, but this URI doesn't require previous authentication.
      *     Endpoint: POST /auth/register
      *     RequestBody parameters: usuario
