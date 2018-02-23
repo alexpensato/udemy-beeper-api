@@ -27,8 +27,8 @@ open class WebSecurity(
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_URL).permitAll()
-//                .antMatchers(HttpMethod.POST, SecurityConstants.LOGIN_URL).permitAll()
+                .antMatchers(HttpMethod.POST, SecurityCenter.REGISTER_URL).permitAll()
+//                .antMatchers(HttpMethod.POST, SecurityCenter.LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .formLogin()

@@ -30,6 +30,9 @@ open class JWTAuthenticationFilter @Autowired constructor(
             val creds = ObjectMapper()
                     .readValue(req.getInputStream(), Usuario::class.java)
 
+//            println(req.attributeNames.toList())
+//            println(creds)
+
             return authentication.authenticate(
                     UsernamePasswordAuthenticationToken(
                             creds.username,
@@ -50,9 +53,12 @@ open class JWTAuthenticationFilter @Autowired constructor(
 
         val token = Jwts.builder()
                 .setSubject((auth.getPrincipal() as User).getUsername())
-                .setExpiration(Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET.toByteArray())
+                .setExpiration(Date(System.currentTimeMillis() + SecurityCenter.EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SecurityCenter.SECRET.toByteArray())
                 .compact()
-        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token)
+
+//        println(token)
+
+        res.addHeader(SecurityCenter.HEADER_STRING, SecurityCenter.TOKEN_PREFIX + token)
     }
 }

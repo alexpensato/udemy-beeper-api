@@ -52,6 +52,7 @@ dependencies {
     // Spring Boot
     compile("org.springframework.boot:spring-boot-starter-web")
     provided("org.springframework.boot:spring-boot-starter-tomcat")
+    compile("org.springframework.boot:spring-boot-devtools")
 
     // Security
     compile("org.springframework.boot:spring-boot-starter-security")

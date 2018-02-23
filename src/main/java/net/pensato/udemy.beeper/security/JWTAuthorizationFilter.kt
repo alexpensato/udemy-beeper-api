@@ -21,9 +21,9 @@ open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: 
     override fun doFilterInternal(req: HttpServletRequest,
                                    res: HttpServletResponse,
                                    chain: FilterChain) {
-        val header = req.getHeader(SecurityConstants.HEADER_STRING)
+        val header = req.getHeader(SecurityCenter.HEADER_STRING)
 
-        if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(SecurityCenter.TOKEN_PREFIX)) {
             chain.doFilter(req, res)
             return
         }
@@ -35,12 +35,13 @@ open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: 
     }
 
     open fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token = request.getHeader(SecurityConstants.HEADER_STRING)
+        val token = request.getHeader(SecurityCenter.HEADER_STRING)
         if (token != null) {
             // parse the token.
+            println("*** TOKEN: $token")
             val user = Jwts.parser()
-                    .setSigningKey(SecurityConstants.SECRET.toByteArray())
-                    .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
+                    .setSigningKey(SecurityCenter.SECRET.toByteArray())
+                    .parseClaimsJws(token.replace(SecurityCenter.TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject()
 

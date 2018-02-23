@@ -19,6 +19,7 @@ import net.pensato.udemy.beeper.domain.Usuario
 import net.pensato.udemy.beeper.domain.Beep
 import net.pensato.udemy.beeper.repository.UsuarioRepository
 import net.pensato.udemy.beeper.repository.BeepRepository
+import net.pensato.udemy.beeper.security.SecurityCenter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -61,10 +62,15 @@ class UsuarioController @Autowired constructor(
      */
     @GetMapping("/{username}")
     @ResponseBody
-    fun getUserInfo(@PathVariable username: String): Usuario {
-        val usuario = usuarioRepository.findByUsername(username)
+    fun getUserInfo(@PathVariable username: String, request: HttpServletRequest): Usuario? {
+        val usuario: Usuario?
+        if (username == "me") {
+            usuario = usuarioRepository.findByUsername(SecurityCenter.getUsernameFromToken(request))
+        } else {
+            usuario = usuarioRepository.findByUsername(username)
+        }
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
-        return usuario!!
+        return usuario
     }
 
     /**
