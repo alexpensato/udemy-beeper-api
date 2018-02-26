@@ -14,7 +14,6 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import javax.servlet.http.HttpServletRequest
 
-
 open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: AuthenticationManager) : BasicAuthenticationFilter(authenticationManager) {
 
     @Throws(IOException::class, ServletException::class)
@@ -38,7 +37,6 @@ open class JWTAuthorizationFilter @Autowired constructor(authenticationManager: 
         val token = request.getHeader(SecurityCenter.HEADER_STRING)
         if (token != null) {
             // parse the token.
-            println("*** TOKEN: $token")
             val user = Jwts.parser()
                     .setSigningKey(SecurityCenter.SECRET.toByteArray())
                     .parseClaimsJws(token.replace(SecurityCenter.TOKEN_PREFIX, ""))

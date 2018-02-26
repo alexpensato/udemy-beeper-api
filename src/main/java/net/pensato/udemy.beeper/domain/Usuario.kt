@@ -37,5 +37,5 @@ data class Usuario(
         var password: String = "",
         var about: String = "I like beeping",
         @Column(length=100)
-        var avatar: String = "novatar.jpg"
+        var avatar: String = "static/novatar.jpg"
 )

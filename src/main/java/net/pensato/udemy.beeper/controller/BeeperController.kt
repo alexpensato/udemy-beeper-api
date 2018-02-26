@@ -15,11 +15,11 @@
  */
 package net.pensato.udemy.beeper.controller
 
-import net.pensato.udemy.beeper.domain.Usuario
 import net.pensato.udemy.beeper.domain.Beep
 import net.pensato.udemy.beeper.repository.UsuarioRepository
 import net.pensato.udemy.beeper.repository.BeepRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -38,16 +38,17 @@ class BeeperController @Autowired constructor(
      *     Return all existing beeps
      *     Endpoint: GET /beeps{?page}
      * </p>
-     * @param page
+     * @param page [@RequestParam]
      *          - pagination
      * @return list of Beeps
      */
     @GetMapping()
-    fun findAllBeeps(@RequestParam page: Int?): List<Beep> = if (page != null) {
+    fun findAllBeeps(page: Int?): Page<Beep> = if (page != null) {
             val pageable: Pageable = PageRequest(page, 10)
-            beepRepository.findAll(pageable).toList()
+            beepRepository.findAll(pageable)
         } else {
-            beepRepository.findAll().toList()
+            val pageable: Pageable = PageRequest(0, 10)
+            beepRepository.findAll(pageable)
         }
 
     /**
@@ -64,7 +65,7 @@ class BeeperController @Autowired constructor(
         val username = request.userPrincipal.getName()
         val usuario = usuarioRepository.findByUsername(username)
         Assert.notNull(usuario, "Authenticated user is not valid.")
-        val beep = Beep(text = text, usuario = usuario!!)
+        val beep = Beep(text = text, author = usuario!!)
         beepRepository.save(beep)
     }
 

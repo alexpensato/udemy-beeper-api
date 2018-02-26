@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
-
 open class JWTAuthenticationFilter @Autowired constructor(
         val authentication: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
 
@@ -29,9 +28,6 @@ open class JWTAuthenticationFilter @Autowired constructor(
         try {
             val creds = ObjectMapper()
                     .readValue(req.getInputStream(), Usuario::class.java)
-
-//            println(req.attributeNames.toList())
-//            println(creds)
 
             return authentication.authenticate(
                     UsernamePasswordAuthenticationToken(
@@ -56,8 +52,6 @@ open class JWTAuthenticationFilter @Autowired constructor(
                 .setExpiration(Date(System.currentTimeMillis() + SecurityCenter.EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityCenter.SECRET.toByteArray())
                 .compact()
-
-//        println(token)
 
         res.addHeader(SecurityCenter.HEADER_STRING, SecurityCenter.TOKEN_PREFIX + token)
     }

@@ -28,7 +28,8 @@ data class Beep(
         @get:NotNull
         var text: String = "",
         var likes: Long = 0,
+        var liked: Boolean = false,
         var creation: LocalDateTime = LocalDateTime.now(),
         @ManyToOne(optional = false)
-        var usuario: Usuario = Usuario()
+        var author: Usuario = Usuario()
 )

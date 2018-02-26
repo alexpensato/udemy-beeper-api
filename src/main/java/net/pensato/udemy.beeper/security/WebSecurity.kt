@@ -27,14 +27,8 @@ open class WebSecurity(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SecurityCenter.REGISTER_URL).permitAll()
-//                .antMatchers(HttpMethod.POST, SecurityCenter.LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
-//                .formLogin()
-//                    .loginProcessingUrl("/auth/login")
-//                    .passwordParameter("password")
-//                    .usernameParameter("username")
-//                .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security

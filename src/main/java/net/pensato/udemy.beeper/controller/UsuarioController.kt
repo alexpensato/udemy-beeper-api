@@ -90,9 +90,9 @@ class UsuarioController @Autowired constructor(
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
         if (page != null) {
             val pageable: Pageable = PageRequest(page, 10)
-            return beepRepository.findAllByUsuario(usuario!!, pageable).toList()
+            return beepRepository.findAllByAuthor(usuario!!, pageable).toList()
         } else {
-            return beepRepository.findAllByUsuario(usuario!!)
+            return beepRepository.findAllByAuthor(usuario!!)
         }
     }
 

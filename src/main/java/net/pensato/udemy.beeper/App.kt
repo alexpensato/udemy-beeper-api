@@ -52,14 +52,14 @@ open class App : SpringBootServletInitializer() {
 		if (result == null || result.toList().isEmpty()) {
 
 			val john = personRepository.save(Usuario(username = "John", email = "john@example.com"))
-			beepRepository.save(Beep(text = "My first beep", usuario = john))
-			beepRepository.save(Beep(text = "Another beep", usuario = john))
-			beepRepository.save(Beep(text = "Last beep", usuario = john))
+			beepRepository.save(Beep(text = "My first beep", author = john))
+			beepRepository.save(Beep(text = "Another beep", author = john))
+			beepRepository.save(Beep(text = "Last beep", author = john))
 
 			val mary = personRepository.save(Usuario(username = "Mary", email = "mary@example.com"))
-			beepRepository.save(Beep(text = "Hello everyone", usuario = mary))
-			beepRepository.save(Beep(text = "How are you doing?", usuario = mary))
-			beepRepository.save(Beep(text = "Good bye everyone", usuario = mary))
+			beepRepository.save(Beep(text = "Hello everyone", author = mary))
+			beepRepository.save(Beep(text = "How are you doing?", author = mary))
+			beepRepository.save(Beep(text = "Good bye everyone", author = mary))
 		}
 	}
 }

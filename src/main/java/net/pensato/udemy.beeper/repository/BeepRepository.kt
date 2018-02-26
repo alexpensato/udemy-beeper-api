@@ -23,8 +23,8 @@ import org.springframework.data.repository.PagingAndSortingRepository
 
 interface BeepRepository : PagingAndSortingRepository<Beep, Long> {
 
-    fun findAllByUsuario(usuario: Usuario): List<Beep>
+    fun findAllByAuthor(author: Usuario): List<Beep>
 
-    fun findAllByUsuario(usuario: Usuario, pageable: Pageable): Page<Beep>
+    fun findAllByAuthor(author: Usuario, pageable: Pageable): Page<Beep>
 
 }
