@@ -60,7 +60,30 @@ open class App : SpringBootServletInitializer() {
 			beepRepository.save(Beep(text = "Hello everyone", author = mary))
 			beepRepository.save(Beep(text = "How are you doing?", author = mary))
 			beepRepository.save(Beep(text = "Good bye everyone", author = mary))
+
+			val joseph = personRepository.save(Usuario(username = "Joseph", email = "joseph@example.com"))
+			beepRepository.save(Beep(text = "Sunny day here!", author = joseph))
+			beepRepository.save(Beep(text = "Time to surf", author = joseph))
+			beepRepository.save(Beep(text = "Haoles are welcome (elsewhere)", author = joseph))
+
+			val carly = personRepository.save(Usuario(username = "Carly", email = "carly@example.com"))
+			beepRepository.save(Beep(text = "Today's recipe: Lasagna", author = carly))
+			beepRepository.save(Beep(text = "Feeling like italian today", author = carly))
+			beepRepository.save(Beep(text = "Who's in for an extra pound?", author = carly))
+
+			beepRepository.save(Beep(text = "One more beep", author = john))
+			beepRepository.save(Beep(text = "This is the last beep... maybe", author = john))
+
+			beepRepository.save(Beep(text = "Hello again everyone", author = mary))
+			beepRepository.save(Beep(text = "It'a beautiful sunnny day outside", author = mary))
+
+			beepRepository.save(Beep(text = "Shark! Shark! Shark!", author = joseph))
+			beepRepository.save(Beep(text = "See you guys back in the crib", author = joseph))
+
+			beepRepository.save(Beep(text = "Time for a desert", author = carly))
+			beepRepository.save(Beep(text = "How about a tiramisu?", author = carly))
 		}
+
 	}
 }
 

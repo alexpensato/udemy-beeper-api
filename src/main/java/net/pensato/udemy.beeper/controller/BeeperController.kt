@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.util.Assert
 import org.springframework.web.bind.annotation.*
@@ -44,7 +45,9 @@ class BeeperController @Autowired constructor(
      */
     @GetMapping()
     fun findAllBeeps(page: Int?): Page<Beep> = if (page != null) {
-            val pageable: Pageable = PageRequest(page, 10)
+            val pageable: Pageable = PageRequest(page, 5, Sort.Direction.ASC, "text")
+            // Sleep only to showcase the spinner icon in the frontend
+            Thread.sleep(1000);
             beepRepository.findAll(pageable)
         } else {
             val pageable: Pageable = PageRequest(0, 10)
