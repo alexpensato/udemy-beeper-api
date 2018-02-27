@@ -2,4 +2,5 @@
 .idea
 .scannerwork
 build/
+out/
 *.iml

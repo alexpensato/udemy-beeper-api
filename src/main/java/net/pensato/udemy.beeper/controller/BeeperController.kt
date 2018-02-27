@@ -74,20 +74,25 @@ class BeeperController @Autowired constructor(
 
     /**
      * <p>
-     *     Increase counter for a beep likes
-     *     Originally was: Toggles state of a beep
+     *     Toggles state of a beep.
      *     Endpoint: POST /beeps/{id}/like
      *     PathVariable: id
      *                   - the id of the beep
      * </p>
      */
-    @PostMapping("/{id}/like")
+    @PatchMapping("/{id}/like")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun toggleBeepStatus(@PathVariable id: Long?) {
         Assert.notNull(id, "You must provide a beep ID.")
         val beep = beepRepository.findOne(id!!)
         Assert.notNull(beep, "You must provide a valid beep ID.")
-        beep.likes = beep.likes + 1
+        if(beep.liked) {
+            beep.liked = false;
+            beep.likes -= 1
+        } else {
+            beep.liked = true;
+            beep.likes += 1
+        }
         beepRepository.save(beep)
     }
 
