@@ -14,7 +14,7 @@ class UserDetailsServiceImpl @Autowired constructor(
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val usuario = usuarioRepository.findByUsername(username) ?: throw UsernameNotFoundException(username)
+        val usuario = usuarioRepository.findByUsernameIgnoreCase(username) ?: throw UsernameNotFoundException(username)
         return User(usuario.username, usuario.password, listOf())
     }
 }

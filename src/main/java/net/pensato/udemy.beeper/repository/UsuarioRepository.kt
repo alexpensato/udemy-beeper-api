@@ -20,6 +20,6 @@ import org.springframework.data.repository.PagingAndSortingRepository
 
 interface UsuarioRepository : PagingAndSortingRepository<Usuario, Long> {
 
-    fun findByUsername(username: String): Usuario?
+    fun findByUsernameIgnoreCase(username: String): Usuario?
 
 }

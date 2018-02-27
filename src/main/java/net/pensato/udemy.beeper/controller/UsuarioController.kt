@@ -65,9 +65,11 @@ class UsuarioController @Autowired constructor(
     fun getUserInfo(@PathVariable username: String, request: HttpServletRequest): Usuario? {
         val usuario: Usuario?
         if (username == "me") {
-            usuario = usuarioRepository.findByUsername(SecurityCenter.getUsernameFromToken(request))
+            usuario = usuarioRepository.findByUsernameIgnoreCase(SecurityCenter.getUsernameFromToken(request))
         } else {
-            usuario = usuarioRepository.findByUsername(username)
+            println(username)
+            usuario = usuarioRepository.findByUsernameIgnoreCase(username)
+            println(usuario)
         }
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
         return usuario
@@ -86,7 +88,7 @@ class UsuarioController @Autowired constructor(
     @GetMapping("/{username}/beeps")
     @ResponseBody
     fun getUserBeeps(@PathVariable username: String, @RequestParam page: Int?): List<Beep> {
-        val usuario = usuarioRepository.findByUsername(username)
+        val usuario = usuarioRepository.findByUsernameIgnoreCase(username)
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
         if (page != null) {
             val pageable: Pageable = PageRequest(page, 10)
@@ -106,7 +108,7 @@ class UsuarioController @Autowired constructor(
     @PutMapping("/me")
     fun updateUser(@RequestBody about: String, request: HttpServletRequest) {
         val username = request.userPrincipal.getName()
-        val usuario = usuarioRepository.findByUsername(username)
+        val usuario = usuarioRepository.findByUsernameIgnoreCase(username)
         Assert.notNull(usuario, "Authenticated user is not valid.")
         usuario!!.about = about
         usuarioRepository.save(usuario)
@@ -123,7 +125,7 @@ class UsuarioController @Autowired constructor(
     @PutMapping("/me/avatar")
     fun updateAvatar(@RequestBody avatar: String, request: HttpServletRequest) {
         val username = request.userPrincipal.getName()
-        val usuario = usuarioRepository.findByUsername(username)
+        val usuario = usuarioRepository.findByUsernameIgnoreCase(username)
         Assert.notNull(usuario, "Authenticated user is not valid.")
         usuario!!.avatar = avatar
         usuarioRepository.save(usuario)

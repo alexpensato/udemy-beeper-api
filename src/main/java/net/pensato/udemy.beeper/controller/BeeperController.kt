@@ -66,7 +66,7 @@ class BeeperController @Autowired constructor(
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody text: String, request: HttpServletRequest) {
         val username = request.userPrincipal.getName()
-        val usuario = usuarioRepository.findByUsername(username)
+        val usuario = usuarioRepository.findByUsernameIgnoreCase(username)
         Assert.notNull(usuario, "Authenticated user is not valid.")
         val beep = Beep(text = text, author = usuario!!)
         beepRepository.save(beep)
