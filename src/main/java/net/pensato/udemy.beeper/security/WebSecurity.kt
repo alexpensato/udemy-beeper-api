@@ -27,6 +27,7 @@ open class WebSecurity(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SecurityCenter.REGISTER_URL).permitAll()
+                .antMatchers(HttpMethod.GET, SecurityCenter.PROFILE_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))

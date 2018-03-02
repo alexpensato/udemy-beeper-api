@@ -9,7 +9,7 @@ object SecurityCenter {
     val TOKEN_PREFIX = "Bearer "
     val HEADER_STRING = "Authorization"
     val REGISTER_URL = "/auth/register"
-    val LOGIN_URL = "/auth/login"
+    val PROFILE_URL = "/users/{username}/**"
 
     fun getUsernameFromToken(request: HttpServletRequest): String {
         val token = request.getHeader(HEADER_STRING)

@@ -21,8 +21,10 @@ import net.pensato.udemy.beeper.repository.UsuarioRepository
 import net.pensato.udemy.beeper.repository.BeepRepository
 import net.pensato.udemy.beeper.security.SecurityCenter
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -65,11 +67,14 @@ class UsuarioController @Autowired constructor(
     fun getUserInfo(@PathVariable username: String, request: HttpServletRequest): Usuario? {
         val usuario: Usuario?
         if (username == "me") {
-            usuario = usuarioRepository.findByUsernameIgnoreCase(SecurityCenter.getUsernameFromToken(request))
+            val authUser = SecurityCenter.getUsernameFromToken(request)
+            if (authUser == "") {
+                usuario = Usuario()
+            } else {
+                usuario = usuarioRepository.findByUsernameIgnoreCase(authUser)
+            }
         } else {
-            println(username)
             usuario = usuarioRepository.findByUsernameIgnoreCase(username)
-            println(usuario)
         }
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
         return usuario
@@ -87,14 +92,15 @@ class UsuarioController @Autowired constructor(
      */
     @GetMapping("/{username}/beeps")
     @ResponseBody
-    fun getUserBeeps(@PathVariable username: String, @RequestParam page: Int?): List<Beep> {
+    fun getUserBeeps(@PathVariable username: String, page: Int?): Page<Beep> {
         val usuario = usuarioRepository.findByUsernameIgnoreCase(username)
         Assert.notNull(usuario, "Username provided does not correspond to a valid user.")
         if (page != null) {
-            val pageable: Pageable = PageRequest(page, 10)
-            return beepRepository.findAllByAuthor(usuario!!, pageable).toList()
+            val pageable: Pageable = PageRequest(page, 5, Sort.Direction.ASC, "text")
+            return beepRepository.findAllByAuthor(usuario!!, pageable)
         } else {
-            return beepRepository.findAllByAuthor(usuario!!)
+            val pageable: Pageable = PageRequest(0, 10)
+            return beepRepository.findAllByAuthor(usuario!!, pageable)
         }
     }
 
